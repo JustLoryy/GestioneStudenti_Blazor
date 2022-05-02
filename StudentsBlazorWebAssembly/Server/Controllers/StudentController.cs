@@ -7,10 +7,16 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly DataContext _context;
-        public StudentController(DataContext context)
+        private readonly IStudentService _studentService;
+        public StudentController(IStudentService studentService)
         {
-            _context = context;
+            _studentService = studentService;
+        }
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<List<Student>>>> GetStudents()
+        {
+            var result = await _studentService.GetStudents();
+            return Ok(result);
         }
     }
 }

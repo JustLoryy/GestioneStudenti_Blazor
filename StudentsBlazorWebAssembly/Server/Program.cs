@@ -1,6 +1,7 @@
 global using StudentsBlazorWebAssembly.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using StudentsBlazorWebAssembly.Server.Data;
+global using StudentsBlazorWebAssembly.Server.Services.ProductService;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 var app = builder.Build();
 
