@@ -18,5 +18,12 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
             var result = await _studentService.GetStudents();
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<Student>>> GetStudentById(int id)
+        {
+            var result = await _studentService.GetStudentById(id);
+            return Ok(result);
+        }
     }
 }

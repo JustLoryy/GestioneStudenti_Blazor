@@ -1,0 +1,50 @@
+﻿@page "/student/{id:int?}"
+@inject IStudentService studentService
+
+<h3>Studente selezionato:</h3>
+
+@if(student == null)
+{
+    <span>@message</span>
+}
+else
+{
+    <table class="table table-active table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.name</td>
+                <td>@student.surname</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private Student student = null;
+    private string message;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        message = "Caricamento studente...";
+        var result = await studentService.GetStudentById(Id);
+        if(!result.Success)
+        {
+            message = result.Message;
+        }
+        else
+        {
+            student = result.Data;
+        }
+    }
+}

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsBlazorWebAssembly.Server", "StudentsBlazorWebAssembly\Server\StudentsBlazorWebAssembly.Server.csproj", "{E17FF3F6-FD0B-4160-86A4-6D5A00B78776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsBlazorWebAssembly.Server", "StudentsBlazorWebAssembly\Server\StudentsBlazorWebAssembly.Server.csproj", "{E17FF3F6-FD0B-4160-86A4-6D5A00B78776}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsBlazorWebAssembly.Client", "StudentsBlazorWebAssembly\Client\StudentsBlazorWebAssembly.Client.csproj", "{EBAA371B-185F-4EDE-8104-E8E4C99261F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsBlazorWebAssembly.Client", "StudentsBlazorWebAssembly\Client\StudentsBlazorWebAssembly.Client.csproj", "{EBAA371B-185F-4EDE-8104-E8E4C99261F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsBlazorWebAssembly.Shared", "StudentsBlazorWebAssembly\Shared\StudentsBlazorWebAssembly.Shared.csproj", "{650AEF9F-D389-4A23-BB4E-259068132C7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsBlazorWebAssembly.Shared", "StudentsBlazorWebAssembly\Shared\StudentsBlazorWebAssembly.Shared.csproj", "{650AEF9F-D389-4A23-BB4E-259068132C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
