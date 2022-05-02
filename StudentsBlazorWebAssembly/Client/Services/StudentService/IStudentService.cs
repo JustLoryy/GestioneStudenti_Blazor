@@ -2,6 +2,7 @@
 {
     public interface IStudentService
     {
+        List<Student> Students { get; set; }
         Task GetStudents();
     }
 }

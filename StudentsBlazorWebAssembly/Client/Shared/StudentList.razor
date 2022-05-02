@@ -1,5 +1,43 @@
-﻿@inject HttpClient http
+﻿@inject IStudentService StudentService
+
+@if(StudentService.Students == null || StudentService.Students.Count == 0)
+{
+    <span>Caricamento studenti...</span>
+}
+else
+{
+<table class="table table-bordered table-active">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var student in StudentService.Students)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.name</td>
+                    <td>@student.surname</td>
+                    <td>
+                        <a href="/student/@student.Id">Modifica</a>
+                        <a href="/student/delete/@student.Id">Elimina</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
 
 @code {
+    private static List<Student> Students = new List<Student>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await StudentService.GetStudents();
+    }
 
 }
