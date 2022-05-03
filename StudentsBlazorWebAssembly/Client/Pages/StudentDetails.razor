@@ -1,6 +1,5 @@
 ﻿@page "/student/{id:int?}"
 @inject IStudentService studentService
-
 <h3>Studente selezionato:</h3>
 
 @if(student == null)
@@ -9,13 +8,18 @@
 }
 else
 {
-    /*<form method="post" class="form-floating col-form-label-lg col-form-label-sm">
-        <p>Nome: <InputText Value=@student.name></InputText></p>
-        <p>Cognome: <InputText Value=@student.surname></InputText></p>
-        <button>Salva</button>
-    </form>*/
+    <div class="container-xl content">
+        <EditForm Model="student" OnSubmit="CreateStudent"></EditForm>
 
-    <table class="table table-active table-bordered">
+        <form method="post">
+            <input type="hidden" value=@student.Id/>
+            <p>Nome: <input class="" type="text" value=@student.name/></p>
+            <p>Cognome: <input type="text" value=@student.surname /></p>
+            <button class="btn btn-dark">Salva</button>
+        </form>
+    </div>
+
+    /*<table class="table table-active table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
@@ -30,7 +34,7 @@ else
                 <td>@student.surname</td>
             </tr>
         </tbody>
-    </table>
+    </table>*/
 }
 
 @code {
@@ -52,5 +56,10 @@ else
         {
             student = result.Data;
         }
+    }
+
+    private void CreateStudent()
+    {
+        
     }
 }

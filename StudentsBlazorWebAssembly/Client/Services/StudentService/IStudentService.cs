@@ -3,7 +3,11 @@
     public interface IStudentService
     {
         List<Student> Students { get; set; }
-        Task GetStudents();
-        Task<ServiceResponse<Student>> GetStudentById(int id);
+        public Task GetStudents();
+        public Task<Student> GetStudentById(int id);
+        public Task UpdateStudent(Student student);
+        public Task CreateStudent(Student student);
+        public Task DeleteStudent(int id);
+        
     }
 }

@@ -8,30 +8,46 @@
             _context = context;
         }
 
-        public async Task<ServiceResponse<Student>> GetStudentById(int id)
+        public async Task<Student> CreateStudent(Student student)
         {
-            var response = new ServiceResponse<Student>();
-            var student = await _context.Students.FindAsync(id);
-
-            if(student == null)
-            {
-                response.Success = false;
-                response.Message = "Mi dispiace, ma lo studente non esiste";
-            }
-            else
-            {
-                response.Data = student;
-            }
-            return response;
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+            return student;
         }
 
-        public async Task<ServiceResponse<List<Student>>> GetStudents()
+        public Task<Student> DeleteStudent(int id)
         {
-            var response = new ServiceResponse<List<Student>>
-            {
-                Data = await _context.Students.ToListAsync()
-            };
-            return response;
+            throw new NotImplementedException();
+        }
+
+        public async Task<Student> GetStudentById(int id)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(h => h.Id == id);
+            return student;
+            //var response = new ServiceResponse<Student>();
+            //var student = await _context.Students.FindAsync(id);
+
+            //if(student == null)
+            //{
+            //    response.Success = false;
+            //    response.Message = "Mi dispiace, ma lo studente non esiste";
+            //}
+            //else
+            //{
+            //    response.Data = student;
+            //}
+            //return response;
+        }
+
+        public async Task<List<Student>> GetStudents()
+        {
+            var student = await _context.Students.ToListAsync();
+            return student;
+        }
+
+        public async Task<Student> UpdateStudent(Student student, int id)
+        {
+            var dbStudent = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
         }
     }
 }

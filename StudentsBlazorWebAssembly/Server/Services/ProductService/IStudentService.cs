@@ -2,7 +2,10 @@
 {
     public interface IStudentService
     {
-        Task<ServiceResponse<List<Student>>> GetStudents();
-        Task<ServiceResponse<Student>> GetStudentById(int id);
+        Task<List<Student>> GetStudents();
+        Task<Student> GetStudentById(int id);
+        Task<Student> CreateStudent(Student student);
+        Task<Student> UpdateStudent(Student student, int id);
+        Task<Student> DeleteStudent(int id);
     }
 }
