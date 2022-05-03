@@ -9,6 +9,12 @@
 }
 else
 {
+    /*<form method="post" class="form-floating col-form-label-lg col-form-label-sm">
+        <p>Nome: <InputText Value=@student.name></InputText></p>
+        <p>Cognome: <InputText Value=@student.surname></InputText></p>
+        <button>Salva</button>
+    </form>*/
+
     <table class="table table-active table-bordered">
         <thead>
             <tr>
@@ -38,7 +44,7 @@ else
     {
         message = "Caricamento studente...";
         var result = await studentService.GetStudentById(Id);
-        if(!result.Success)
+        if(result.Success)
         {
             message = result.Message;
         }

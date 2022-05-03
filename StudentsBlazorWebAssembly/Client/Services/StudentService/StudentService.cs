@@ -18,8 +18,8 @@
         public async Task GetStudents()
         {
             var result = await _http.GetFromJsonAsync<ServiceResponse<List<Student>>>("api/student");
-            if (result != null && result.Data != null)
-                Students = result.Data;
+//            if (result != null && result.Data != null)
+              Students = result.Data;
         }
     }
 }
