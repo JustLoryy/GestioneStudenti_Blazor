@@ -18,6 +18,10 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
             var student = await _context.Students.ToListAsync();
             return Ok(student);
         }
+        private async Task<List<Student>> GetDbStudents()
+        {
+            return await _context.Students.ToListAsync();
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudentById(int id)
@@ -33,7 +37,7 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            return Ok(await GetStudents());
+            return Ok(await GetDbStudents());
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Student>>> UpdateStudent(Student student, int id)
@@ -46,7 +50,7 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
             dbStudent.name = student.name;
             dbStudent.surname = student.surname;
             await _context.SaveChangesAsync();
-            return Ok(await GetStudents());
+            return Ok(await GetDbStudents());
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Student>>> DeleteStudent(int id)
@@ -57,7 +61,7 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
 
             _context.Students.Remove(dbStudent);
             await _context.SaveChangesAsync();
-            return Ok(await GetStudents());
+            return Ok(await GetDbStudents());
         }
     }
 }

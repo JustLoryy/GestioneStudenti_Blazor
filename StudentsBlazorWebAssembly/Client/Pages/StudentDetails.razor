@@ -1,65 +1,59 @@
-﻿@page "/student/{id:int?}"
+﻿@page "/student"
+@page "/student/{id:int}"
 @inject IStudentService studentService
-<h3>Studente selezionato:</h3>
+@inject NavigationManager navigationManager
 
-@if(student == null)
+@if(Id == null)
 {
-    <span>@message</span>
+    <h3>Create a new Student</h3>
 }
 else
 {
+   <h3>Edit @student.name</h3>
+}
     <div class="container-xl content">
-        <EditForm Model="student" OnSubmit="CreateStudent"></EditForm>
-
-        <form method="post">
-            <input type="hidden" value=@student.Id/>
-            <p>Nome: <input class="" type="text" value=@student.name/></p>
-            <p>Cognome: <input type="text" value=@student.surname /></p>
-            <button class="btn btn-dark">Salva</button>
-        </form>
+        <EditForm Model="student" OnSubmit="HandleStudent">
+            <div>
+                <label for="name">Nome</label>
+                <InputText id="name" @bind-Value="student.name" class="form-control"></InputText>
+            </div>
+            <div>
+                <label for="surname">Cognome</label>
+                <InputText id="surname" @bind-Value="student.surname" class="form-control"></InputText>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">@btnText</button>
+        </EditForm>
     </div>
 
-    /*<table class="table table-active table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Cognome</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@student.Id</td>
-                <td>@student.name</td>
-                <td>@student.surname</td>
-            </tr>
-        </tbody>
-    </table>*/
-}
-
 @code {
-    private Student student = null;
-    private string message;
+    Student student = new Student();
 
     [Parameter]
-    public int Id { get; set; }
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Create a new Student" : "Update Student";
+        await studentService.GetStudents();
+    }
 
     protected override async Task OnParametersSetAsync()
     {
-        message = "Caricamento studente...";
-        var result = await studentService.GetStudentById(Id);
-        if(result.Success)
+        if(Id != null) student = await studentService.GetStudentById((int)Id);
+    }
+
+    async Task HandleStudent()
+    {
+        if (Id == null)
         {
-            message = result.Message;
+            await studentService.CreateStudent(student);
         }
         else
         {
-            student = result.Data;
+            await studentService.UpdateStudent(student);
         }
-    }
-
-    private void CreateStudent()
-    {
-        
     }
 }

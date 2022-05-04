@@ -1,4 +1,5 @@
 ﻿@inject IStudentService StudentService
+@inject NavigationManager navigationManager
 
 @if(StudentService.Students == null || StudentService.Students.Count == 0)
 {
@@ -23,21 +24,38 @@ else
                     <td>@student.name</td>
                     <td>@student.surname</td>
                     <td>
-                        <a href="/student/@student.Id">Modifica</a>
-                        <a href="/student/delete/@student.Id">Elimina</a>
+                        <button class="btn btn-secondary" @onclick="(() => EditStudent(student.Id))"><i class="oi oi-pencil"></i> Modifica</button>
+                        <button class="btn btn-secondary" @onclick="(() => DeleteStudent(student.Id))"><i class="oi oi-delete"></i> Elimina</button>
                     </td>
                 </tr>
             }
         </tbody>
 </table>
+<button class="btn btn-primary" @onclick="CreateStudent">Create Student</button>
 }
 
 @code {
-    private static List<Student> Students = new List<Student>();
+    private Student student = new Student();
+    //private static List<Student> Students = new List<Student>();
 
     protected override async Task OnInitializedAsync()
     {
         await StudentService.GetStudents();
+    }
+
+    void EditStudent(int id)
+    {
+        navigationManager.NavigateTo($"/student/{id}");
+    }
+
+    void CreateStudent()
+    {
+        navigationManager.NavigateTo("/student");
+    }
+
+    async Task DeleteStudent(int id)
+    {
+        await StudentService.DeleteStudent(id);
     }
 
 }

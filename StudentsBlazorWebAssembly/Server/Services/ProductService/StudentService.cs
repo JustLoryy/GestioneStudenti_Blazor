@@ -48,6 +48,7 @@
         public async Task<Student> UpdateStudent(Student student, int id)
         {
             var dbStudent = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+            return dbStudent;
         }
     }
 }
