@@ -16,7 +16,7 @@ builder.Services.AddMatBlazor();
 
 builder.Services.AddMatToaster(config =>
 {
-    config.Position = MatToastPosition.TopRight;
+    config.Position = MatToastPosition.BottomRight;
     config.PreventDuplicates = true;
     config.NewestOnTop = true;
     config.ShowCloseButton = false;
