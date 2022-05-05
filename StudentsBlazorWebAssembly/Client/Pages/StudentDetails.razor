@@ -50,12 +50,12 @@ else
     {
         if (Id == null)
         {
-            matToaster.Add("Studente creato con successo!", MatToastType.Success);
+            matToaster.Add("Student Created Succesfully", MatToastType.Success);
             await studentService.CreateStudent(student);
         }
         else
         {
-            matToaster.Add("Studente modificato con successo!", MatToastType.Success);
+            matToaster.Add("Student Updated Succesfully", MatToastType.Success);
             await studentService.UpdateStudent(student);
         }
     }
