@@ -1,7 +1,7 @@
 ﻿@inject IStudentService StudentService
 @inject NavigationManager navigationManager
 @inject IMatToaster matToaster
-@inject IMatDialogService dialogService
+
 @if(StudentService.Students == null || StudentService.Students.Count == 0)
 {
     <span>Caricamento studenti...</span>
@@ -26,22 +26,47 @@ else
                     <td>@student.surname</td>
                     <td>
                         <button class="btn btn-secondary" @onclick="(() => EditStudent(student.Id))"><i class="oi oi-pencil"></i> Modifica</button>
-                        <button class="btn btn-secondary" @onclick="(() => OpenDialogFromService())"><i class="oi oi-trash"></i> Elimina</button>
+                        <button class="btn btn-secondary" @onclick="(() => OpenDeleteDialog(student))"><i class="oi oi-trash"></i> Elimina</button>
                     </td>
                 </tr>
             }
         </tbody>
 </table>
-<button class="btn btn-primary" @onclick="(() => CreateStudent())">Create Student</button>
+<button class="btn btn-primary" @onclick="(() => CreateStudent())"><i class="oi oi-plus"></i> Crea Studente</button>
+}
+
+@if (DeleteDialogOpen)
+{
+    <ModelDialog Title="Cancellazione Studente" Text="Sei sicuro di voler eliminare questo studente?" OnClose="@OnDeleteDialogClose"></ModelDialog>
 }
 
 @code {
     private Student student = new Student();
-    //private static List<Student> Students = new List<Student>();
+    private Student _studentToDelete;
+    public bool DeleteDialogOpen { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await StudentService.GetStudents();
+    }
+
+    private void OnDeleteDialogClose(bool accepted)
+    {
+        if(accepted)
+        {
+            DeleteStudent(_studentToDelete.Id);
+            StudentService.GetStudents();
+            StateHasChanged();
+            _studentToDelete = null;
+        }
+        DeleteDialogOpen = false;
+        StateHasChanged();
+    }
+    private void OpenDeleteDialog(Student s)
+    {
+        DeleteDialogOpen = true;
+        _studentToDelete = s;
+        StateHasChanged();
     }
 
     void EditStudent(int id)
@@ -54,15 +79,10 @@ else
         navigationManager.NavigateTo("/student");
     }
 
-    /*async Task DeleteStudent(int id)
-         {
+    async Task DeleteStudent(int id)
+    {
          matToaster.Add("Student Deleted Succesfully", MatToastType.Success);
          await StudentService.DeleteStudent(id);
-     }*/
-
-    async Task OpenDialogFromService()
-    {
-        
     }
 
 }
