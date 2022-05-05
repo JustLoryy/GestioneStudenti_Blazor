@@ -2,6 +2,7 @@
 @page "/student/{id:int}"
 @inject IStudentService studentService
 @inject NavigationManager navigationManager
+@inject IMatToaster matToaster
 
 @if(Id == null)
 {
@@ -49,10 +50,12 @@ else
     {
         if (Id == null)
         {
+            matToaster.Add("Student Created Succesfully", MatToastType.Success);
             await studentService.CreateStudent(student);
         }
         else
         {
+            matToaster.Add("Student Updated Succesfully", MatToastType.Success);
             await studentService.UpdateStudent(student);
         }
     }

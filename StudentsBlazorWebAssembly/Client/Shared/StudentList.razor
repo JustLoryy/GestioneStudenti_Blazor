@@ -1,6 +1,7 @@
 ﻿@inject IStudentService StudentService
 @inject NavigationManager navigationManager
-
+@inject IMatToaster matToaster
+@inject IMatDialogService dialogService
 @if(StudentService.Students == null || StudentService.Students.Count == 0)
 {
     <span>Caricamento studenti...</span>
@@ -25,13 +26,13 @@ else
                     <td>@student.surname</td>
                     <td>
                         <button class="btn btn-secondary" @onclick="(() => EditStudent(student.Id))"><i class="oi oi-pencil"></i> Modifica</button>
-                        <button class="btn btn-secondary" @onclick="(() => DeleteStudent(student.Id))"><i class="oi oi-delete"></i> Elimina</button>
+                        <button class="btn btn-secondary" @onclick="(() => OpenDialogFromService())"><i class="oi oi-trash"></i> Elimina</button>
                     </td>
                 </tr>
             }
         </tbody>
 </table>
-<button class="btn btn-primary" @onclick="CreateStudent">Create Student</button>
+<button class="btn btn-primary" @onclick="(() => CreateStudent())">Create Student</button>
 }
 
 @code {
@@ -53,9 +54,15 @@ else
         navigationManager.NavigateTo("/student");
     }
 
-    async Task DeleteStudent(int id)
+    /*async Task DeleteStudent(int id)
+         {
+         matToaster.Add("Student Deleted Succesfully", MatToastType.Success);
+         await StudentService.DeleteStudent(id);
+     }*/
+
+    async Task OpenDialogFromService()
     {
-        await StudentService.DeleteStudent(id);
+        
     }
 
 }

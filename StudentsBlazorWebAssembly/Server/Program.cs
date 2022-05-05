@@ -3,7 +3,7 @@ global using Microsoft.EntityFrameworkCore;
 global using StudentsBlazorWebAssembly.Server.Data;
 global using StudentsBlazorWebAssembly.Server.Services.ProductService;
 using Microsoft.AspNetCore.ResponseCompression;
-
+using MatBlazor;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +20,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddMatBlazor();
+
+builder.Services.AddMatToaster(config =>
+{
+    config.Position = MatToastPosition.TopRight;
+    config.PreventDuplicates = true;
+    config.NewestOnTop = true;
+    config.ShowCloseButton = false;
+    config.MaximumOpacity = 95;
+    config.VisibleStateDuration = 3000;
+});
 
 var app = builder.Build();
 
