@@ -8,7 +8,7 @@ namespace StudentsBlazorWebAssembly.Server.Controllers
     public class StudentController : ControllerBase
     {
         private readonly DataContext _context;
-        public StudentController(IStudentService studentService, DataContext context)
+        public StudentController(DataContext context)
         {
             _context = context;
         }

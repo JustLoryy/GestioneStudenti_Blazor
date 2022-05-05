@@ -8,35 +8,29 @@
             _context = context;
         }
 
-        public async Task<Student> CreateStudent(Student student)
+        public async Task<List<Student>> CreateStudent(Student student)
         {
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
-            return student;
+
+            return await GetDbStudents();
         }
 
-        public Task<Student> DeleteStudent(int id)
+        public Task<List<Student>> DeleteStudent(int id)
         {
             throw new NotImplementedException();
         }
 
+        public async Task<List<Student>> GetDbStudents()
+        {
+            return await _context.Students.ToListAsync();
+        }
+
         public async Task<Student> GetStudentById(int id)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(h => h.Id == id);
-            return student;
-            //var response = new ServiceResponse<Student>();
-            //var student = await _context.Students.FindAsync(id);
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
 
-            //if(student == null)
-            //{
-            //    response.Success = false;
-            //    response.Message = "Mi dispiace, ma lo studente non esiste";
-            //}
-            //else
-            //{
-            //    response.Data = student;
-            //}
-            //return response;
+            return student;
         }
 
         public async Task<List<Student>> GetStudents()
@@ -45,10 +39,11 @@
             return student;
         }
 
-        public async Task<Student> UpdateStudent(Student student, int id)
+        public async Task<List<Student>> UpdateStudent(Student student, int id)
         {
             var dbStudent = await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
-            return dbStudent;
+
+            return await GetDbStudents();
         }
     }
 }
