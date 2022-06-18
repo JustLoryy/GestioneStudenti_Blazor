@@ -2,7 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IMatToaster matToaster
 
-@if(StudentService.Students == null || StudentService.Students.Count == 0)
+@if(StudentService.Students == null)
 {
     <span>Caricamento studenti...</span>
 }
@@ -56,8 +56,9 @@ else
         {
             DeleteStudent(_studentToDelete.Id);
             StudentService.GetStudents();
-            StateHasChanged();
             _studentToDelete = null;
+            StateHasChanged();
+            //navigationManager.NavigateTo(navigationManager.Uri, forceLoad:true);
         }
         DeleteDialogOpen = false;
         StateHasChanged();
@@ -81,8 +82,9 @@ else
 
     async Task DeleteStudent(int id)
     {
-         matToaster.Add("Studente eliminato con successo!", MatToastType.Success);
-         await StudentService.DeleteStudent(id);
+        matToaster.Add("Studente eliminato con successo!", MatToastType.Success);
+        await StudentService.DeleteStudent(id);
+        StateHasChanged();
     }
 
 }
